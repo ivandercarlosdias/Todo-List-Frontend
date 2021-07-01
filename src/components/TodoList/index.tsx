@@ -1,21 +1,48 @@
 import './style.scss'
+import { ITodoListProps } from './types'
 
-export default function TodoList(): JSX.Element {
+export default function TodoList(props: ITodoListProps): JSX.Element {
+    const { list, handleRemove, handleMarkAsDone, handleMarkAsPending } = props
+
     return (
         <>
             <h2>Task List</h2>
-            <ul>
-                <li>Item 1</li>
-                <li>Item 2</li>
-                <li>Item 3</li>
-                <li>Item 4</li>
-                <li>Item 5</li>
-                <li>Item 6</li>
-                <li>Item 7</li>
-                <li>Item 8</li>
-                <li>Item 9</li>
-                <li>Item 10</li>
-            </ul>
+            <table className="table-list">
+                <thead>
+                    <tr>
+                        <td>Descrição</td>
+                        <td width="200">Ações</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {list.map((task) => (
+                        <tr key={task._id}>
+                            <td>
+                                <p className={task.done ? 'mark-as-done' : ''}>{task.description}</p>
+                            </td>
+                            <td>
+                                <span
+                                    className="button"
+                                    title="Marcar como concluído"
+                                    onClick={() => handleMarkAsDone(task)}
+                                >
+                                    ✅
+                                </span>
+                                <span
+                                    className="button"
+                                    title="Marcar como pendente"
+                                    onClick={() => handleMarkAsPending(task)}
+                                >
+                                    💡
+                                </span>
+                                <span className="button" title="Excluir tarefa" onClick={() => handleRemove(task)}>
+                                    ❌
+                                </span>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </>
     )
 }
