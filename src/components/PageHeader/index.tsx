@@ -1,10 +1,13 @@
 import { IPageHeaderProps } from './type'
 
+import './style.scss'
+
 export default function PageHeader(props: IPageHeaderProps): JSX.Element {
+    const { title, subtitle } = props
     return (
-        <div>
-            <h1>{props.title}</h1>
-            <h3>{props.subtitle}</h3>
+        <div className="page-header">
+            <h1>{title}</h1>
+            <h2>{subtitle}</h2>
         </div>
     )
 }
