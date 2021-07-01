@@ -15,7 +15,7 @@ export default function Todo(): JSX.Element {
         list: [],
     })
 
-    useEffect(refresh)
+    useEffect(refresh, []) // eslint-disable-line
 
     function refresh(): void {
         api.get(`?sort=createdAt`).then((res) =>
