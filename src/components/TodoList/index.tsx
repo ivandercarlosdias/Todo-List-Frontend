@@ -11,7 +11,7 @@ export default function TodoList(props: ITodoListProps): JSX.Element {
                 <thead>
                     <tr>
                         <td>Descrição</td>
-                        <td width="150">Ações</td>
+                        <td width="140">Ações</td>
                     </tr>
                 </thead>
                 <tbody>
