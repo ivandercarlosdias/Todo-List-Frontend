@@ -33,12 +33,11 @@
         user-select: none;
         text-decoration: none !important;
         cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        display: inline-block;
+        text-align: center;
         width: 2rem;
-        height: 2rem;
-        font-size: 1.1rem;
+        line-height: 2rem;
+        font-size: 1.2rem;
         background-color: var(--white);
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 5px;
@@ -49,6 +48,12 @@
     }
 
     p {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
         &.mark-as-done {
             text-decoration: line-through;
         }

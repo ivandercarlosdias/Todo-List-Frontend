@@ -11,7 +11,7 @@ export default function TodoList(props: ITodoListProps): JSX.Element {
                 <thead>
                     <tr>
                         <td>Descrição</td>
-                        <td width="200">Ações</td>
+                        <td width="150">Ações</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,23 +21,32 @@ export default function TodoList(props: ITodoListProps): JSX.Element {
                                 <p className={task.done ? 'mark-as-done' : ''}>{task.description}</p>
                             </td>
                             <td>
-                                <span
-                                    className="button"
-                                    title="Marcar como concluído"
-                                    onClick={() => handleMarkAsDone(task)}
-                                >
-                                    ✅
-                                </span>
-                                <span
-                                    className="button"
-                                    title="Marcar como pendente"
-                                    onClick={() => handleMarkAsPending(task)}
-                                >
-                                    💡
-                                </span>
-                                <span className="button" title="Excluir tarefa" onClick={() => handleRemove(task)}>
-                                    ❌
-                                </span>
+                                {!task.done ? (
+                                    <span
+                                        className="button"
+                                        title="Marcar como concluído"
+                                        onClick={() => handleMarkAsDone(task)}
+                                    >
+                                        ✅
+                                    </span>
+                                ) : (
+                                    <>
+                                        <span
+                                            className="button"
+                                            title="Marcar como pendente"
+                                            onClick={() => handleMarkAsPending(task)}
+                                        >
+                                            💡
+                                        </span>
+                                        <span
+                                            className="button"
+                                            title="Excluir tarefa"
+                                            onClick={() => handleRemove(task)}
+                                        >
+                                            ❌
+                                        </span>
+                                    </>
+                                )}
                             </td>
                         </tr>
                     ))}
