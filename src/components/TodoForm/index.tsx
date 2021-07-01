@@ -1,6 +1,7 @@
 import './style.scss'
+import { ITodoForm } from './types'
 
-export default function TodoForm(props: any): JSX.Element {
+export default function TodoForm(props: ITodoForm): JSX.Element {
     const { description, handleChange, handleAdd } = props
 
     return (
