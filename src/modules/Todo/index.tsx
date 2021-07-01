@@ -1,36 +1,65 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ChangeEvent } from 'react'
-import axios from 'axios'
+
+import { IStateProps, ITaskProps } from './types'
+
+import { api } from '../../services/api'
 
 import PageHeader from '../../components/PageHeader'
 import TodoForm from '../../components/TodoForm'
 import TodoList from '../../components/TodoList'
 
-export default function Todo() {
-    const API = 'http://localhost:3003/api/todos'
-
-    const [state, setState] = useState({
+export default function Todo(): JSX.Element {
+    const [state, setState] = useState<IStateProps>({
         description: '',
         list: [],
     })
 
-    function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    useEffect(refresh)
+
+    function refresh(): void {
+        api.get(`?sort=createdAt`).then((res) =>
+            setState({
+                ...state,
+                description: '',
+                list: res.data,
+            })
+        )
+    }
+
+    function handleChange(event: ChangeEvent<HTMLInputElement>): void {
         setState({
             ...state,
             description: event.target.value,
         })
     }
 
-    function handleAdd() {
-        const description = state.description
-        axios.post(API, { description }).then((res) => console.log('Funcionou a comunicação com o backend!'))
+    function handleAdd(): void {
+        api.post('/', { description: state.description }).then(refresh)
+    }
+
+    function handleRemove(task: ITaskProps): void {
+        api.delete(`/${task._id}`).then(refresh)
+    }
+
+    function handleMarkAsDone(task: ITaskProps): void {
+        api.put(`/${task._id}`, { ...task, done: true }).then(refresh)
+    }
+
+    function handleMarkAsPending(task: ITaskProps): void {
+        api.put(`/${task._id}`, { ...task, done: false }).then(refresh)
     }
 
     return (
         <>
             <PageHeader title="Todo App" subtitle="Lorem ipsum dolor sit amet" />
             <TodoForm handleAdd={handleAdd} description={state.description} handleChange={handleChange} />
-            <TodoList />
+            <TodoList
+                list={state.list}
+                handleRemove={handleRemove}
+                handleMarkAsDone={handleMarkAsDone}
+                handleMarkAsPending={handleMarkAsPending}
+            />
         </>
     )
 }
